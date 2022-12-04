@@ -60,10 +60,26 @@ $result = $conn->query($qr);
 while ($row = $result->fetch_assoc()) {
 $nazwa = $row['Nazwa'];
 $ilosc = $row['Ilosc'];
-echo "<div style='width: 100px;float:left;text-align:center;'>
-<img style='width: 100px; height: 100px;'src='filizanka.png'>
-<p>$nazwa</p>
-<p>$ilosc</p>
+$cena = $row['Cena'];
+$promocja = $row['Promocja'];
+echo "<div style='width: 150px;float:left;text-align:center;'>
+<img style='width: 150px; height: 150px;'src='filizanka.png'>
+$nazwa <br>
+Ilość: $ilosc ";
+if ($promocja > 0)
+{
+  echo "<br> Cena: <s>$cena</s><br>";
+  $cena = $cena - ($cena * $promocja);
+  $cena = round($cena, 2);
+  echo "<b>$cena zł</b><br>";
+  $promocja = $promocja * 100;
+  echo "Promocja: <b>$promocja %</b>";
+}
+else
+{
+  echo "<p>Cena: $cena zł</p>";
+}
+echo "
 <button type='button'>Dodaj do koszyka</button>
 </div>";
 
